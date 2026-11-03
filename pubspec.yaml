@@ -1,0 +1,76 @@
+name: zmusic
+description: "QPlayer rewritten in Flutter with official .qplug plugin compatibility."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # plugin runtime (QuickJS / JavaScriptCore, Promise + message bridge)
+  flutter_js: ^0.8.7
+
+  # Windows shell integration (tray, window lifecycle, SMTC, multi-window)
+  window_manager: 0.4.3
+  tray_manager: 0.2.4
+  smtc_windows: 1.1.0
+  windows_single_instance: 1.0.1
+  desktop_multi_window: 0.2.1
+  screen_retriever: ^0.2.2
+  ffi: ^2.1.4
+
+  # networking / crypto / archive
+  dio: ^5.9.0
+  crypto: ^3.0.6
+  cryptography: ^2.9.0
+  pointycastle: ^3.9.1
+  archive: ^3.6.1
+  charset: ^2.0.1
+
+  # storage
+  path: ^1.9.1
+  path_provider: ^2.1.5
+  shared_preferences: ^2.5.4
+  flutter_secure_storage: ^9.2.4
+
+  # audio
+  media_kit: ^1.2.6
+  media_kit_libs_audio: ^1.0.7
+  audio_metadata_reader: ^1.8.1
+
+  # platform integration
+  file_picker: ^10.3.10
+  webview_flutter: ^4.13.0
+  url_launcher: ^6.3.2
+  qr_flutter: ^4.1.0
+  win32: ^5.15.0
+
+  # state / utilities
+  provider: ^6.1.5
+  collection: ^1.19.1
+  uuid: ^4.5.2
+  intl: ^0.20.2
+  xml: ^6.6.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+# smtc_windows 1.1.0 generates against flutter_rust_bridge 2.11.1; newer
+# runtime versions reject the codegen at startup.
+dependency_overrides:
+  flutter_rust_bridge: 2.11.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/plugin-catalog.json
+    - assets/tray_icon.ico

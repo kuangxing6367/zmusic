@@ -1,0 +1,51 @@
+[
+  {
+    "id": "netease",
+    "name": "网易云音乐",
+    "description": "由社区维护的网易云音乐音源，提供搜索、歌单、登录与每日推荐。",
+    "repo": "TIMER-err/qplayer-netease-plugin",
+    "publisherKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEb/6w4W2oyOmqybld26Cnv17mXEA6x1Xkw4zCrd+hfAnmcEJjBTKtC9jO0Q4DVDOzXsmehlW+PJRINAZ99up6aQ=="
+  },
+  {
+    "id": "qq",
+    "name": "QQ 音乐",
+    "description": "由社区维护的 QQ 音乐音源，提供搜索、歌单、扫码与 Cookie 登录。",
+    "repo": "TIMER-err/qplayer-qqmusic-plugin",
+    "publisherKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAED7z1yYQ9a5UVpOPUict1ShkKH26NnbEMMAHsxy5zJEPeDd3J2etP1PRKXylO2KWWZgib2KB5/yZ0Xgmj+36TBg=="
+  },
+  {
+    "id": "kuwo",
+    "name": "酷我音乐",
+    "description": "由社区维护的酷我音乐音源，提供搜索、歌单与 Cookie 登录。",
+    "repo": "MiaM1ku/qplayer-kuwo-plugin",
+    "publisherKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEb20opVRUPIiFEeYdDli4uVbL1ry/+VVg5zHVC9/tN0rGcmcssS/Ko3mHjzairTmZZtIuWngooAvqOtOguaK/mg=="
+  },
+  {
+    "id": "migu",
+    "name": "咪咕音乐",
+    "description": "由社区维护的咪咕音乐音源，提供搜索、歌单与 Cookie 登录。",
+    "repo": "MiaM1ku/qplayer-migu-plugin",
+    "publisherKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEb20opVRUPIiFEeYdDli4uVbL1ry/+VVg5zHVC9/tN0rGcmcssS/Ko3mHjzairTmZZtIuWngooAvqOtOguaK/mg=="
+  },
+  {
+    "id": "kugou",
+    "name": "酷狗音乐",
+    "description": "由社区维护的酷狗音乐音源，提供搜索、歌单与扫码登录。",
+    "repo": "MiaM1ku/qplayer-kugou-plugin",
+    "publisherKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEb20opVRUPIiFEeYdDli4uVbL1ry/+VVg5zHVC9/tN0rGcmcssS/Ko3mHjzairTmZZtIuWngooAvqOtOguaK/mg=="
+  },
+  {
+    "id": "soda",
+    "name": "汽水音乐",
+    "description": "由社区维护的汽水音乐音源，提供搜索、歌单与扫码登录。",
+    "repo": "MiaM1ku/qplayer-soda-plugin",
+    "publisherKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEb20opVRUPIiFEeYdDli4uVbL1ry/+VVg5zHVC9/tN0rGcmcssS/Ko3mHjzairTmZZtIuWngooAvqOtOguaK/mg=="
+  },
+  {
+    "id": "unlock",
+    "name": "网易云解锁",
+    "description": "下载工具，需要已登录的 QQ 音乐或网易云音乐账号；把当前歌曲保存为 mp3/flac。",
+    "repo": "Ink-Stained-Clouds/qplayer-unlock-plugin",
+    "publisherKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE0BAIvZ9sZOJGVhH3W37xqdWYPCC4uQmEcDKrPOmYJcpjEsCU431cTthU5ELo6nIxlHzKoqJEz8ipoDhdzcPyeg=="
+  }
+]
