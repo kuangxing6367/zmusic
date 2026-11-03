@@ -777,22 +777,23 @@ class _NarrowLayout extends StatelessWidget {
     final lyrics = controller.lyricSettings;
     return LayoutBuilder(
       builder: (context, constraints) {
+        final compact = constraints.maxHeight < 720;
         final coverSize = math.min(
-          constraints.maxWidth - 88,
-          math.min(330.0, constraints.maxHeight * 0.34),
+          constraints.maxWidth * 0.58,
+          math.min(compact ? 208.0 : 260.0, constraints.maxHeight * 0.24),
         );
         return Padding(
-          padding: const EdgeInsets.fromLTRB(24, 4, 24, 12),
+          padding: const EdgeInsets.fromLTRB(20, 4, 20, 10),
           child: Column(
             children: [
-              const Spacer(flex: 1),
+              const SizedBox(height: 6),
               _PlaybackCover(
                 song: song,
                 size: coverSize,
-                radius: 28,
+                radius: coverSize * 0.10,
                 playing: playback.playing,
               ),
-              const SizedBox(height: 22),
+              SizedBox(height: compact ? 14 : 20),
               _TitleBlock(
                 song: song,
                 liked: liked,
@@ -807,7 +808,7 @@ class _NarrowLayout extends StatelessWidget {
                 song: song,
                 onSnack: onSnack,
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 4),
               Expanded(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(22),

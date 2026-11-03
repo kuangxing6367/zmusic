@@ -11,11 +11,13 @@ import 'package:window_manager/window_manager.dart';
 import 'package:windows_single_instance/windows_single_instance.dart';
 
 import 'core/app/app_controller.dart';
+import 'core/app/lyric_notification.dart';
 import 'core/app/system_integration.dart';
 import 'ui/app_shell.dart';
 import 'ui/player_route.dart';
 import 'ui/theme.dart';
 import 'ui/widgets/app_toast.dart';
+import 'ui/widgets/lyric_island.dart';
 import 'ui/widgets/mini_player.dart';
 import 'ui/windows/desktop_lyric_window.dart';
 
@@ -148,6 +150,7 @@ Future<void> main(List<String> args) async {
 
   await controller.initialize();
   if (controller.initError.isEmpty) {
+    LyricNotification.instance.attach(controller);
     _systemIntegration = SystemIntegration(controller: controller);
     await _systemIntegration!.init();
   }
@@ -213,6 +216,31 @@ class _ZMusicApp extends StatelessWidget {
                               controller: controller,
                               onOpen: () =>
                                   openPlayer(navigatorKey, controller),
+                            ),
+                          ),
+                        if (!hidden)
+                          Positioned(
+                            top: (media?.padding.top ?? 0) + 8,
+                            left: 0,
+                            right: 0,
+                            child: Center(
+                              child: AnimatedBuilder(
+                                animation: controller.lyricSettings,
+                                builder: (context, _) {
+                                  final mobile =
+                                      Platform.isAndroid || Platform.isIOS;
+                                  if (!mobile ||
+                                      !controller.initialized ||
+                                      !controller.lyricSettings.showIsland) {
+                                    return const SizedBox.shrink();
+                                  }
+                                  return LyricIsland(
+                                    playback: controller.playback,
+                                    onTap: () =>
+                                        openPlayer(navigatorKey, controller),
+                                  );
+                                },
+                              ),
                             ),
                           ),
                       ],

@@ -278,6 +278,16 @@ class SettingsPage extends StatelessWidget {
                       '${(lyrics.desktopBackgroundOpacity * 100).round()}%',
                   onChanged: lyrics.setDesktopBackgroundOpacity,
                 ),
+                const Divider(height: 1),
+                SwitchListTile(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 12),
+                  secondary: const Icon(Icons.smartphone_rounded),
+                  title: const Text('状态栏歌词'),
+                  subtitle: const Text('手机端在顶部以灵动岛样式显示当前歌词'),
+                  value: lyrics.showIsland,
+                  onChanged: lyrics.setShowIsland,
+                ),
               ],
             ),
             const SectionHeader(title: '播放'),

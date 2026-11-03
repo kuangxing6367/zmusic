@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../../core/app/app_controller.dart';
@@ -64,7 +66,7 @@ class _AppShellState extends State<AppShell> {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: _controller,
+      animation: Listenable.merge([_controller, _controller.lyricSettings]),
       builder: (context, _) {
         if (_controller.initializing) return const _SplashScreen();
         if (_controller.initError.isNotEmpty) {
@@ -155,7 +157,23 @@ class _AppShellState extends State<AppShell> {
               body: Column(
                 children: [
                   Expanded(
-                    child: _AnimatedTabStack(index: _index, children: pages),
+                    child: SafeArea(
+                      bottom: false,
+                      child: Padding(
+                        // Reserve a band for the lyric island so it never
+                        // covers page titles on phones.
+                        padding: EdgeInsets.only(
+                          top: (Platform.isAndroid || Platform.isIOS) &&
+                                  _controller.lyricSettings.showIsland
+                              ? 34
+                              : 0,
+                        ),
+                        child: _AnimatedTabStack(
+                          index: _index,
+                          children: pages,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),

@@ -78,6 +78,20 @@ Windows 首次构建时 `media_kit_libs_windows_audio` 会从 GitHub 下载 `lib
 - 启动图标使用与 Windows 相同的品牌标志（mipmap 48/72/96/144/192）。
 - 构建：`flutter build apk --release`，产物在 `build/app/outputs/flutter-apk/app-release.apk`。
 
+## 歌词上岛（Android）
+
+第三方应用无法直接画进系统的灵动岛，官方路径是「常驻通知 + Live Updates」：
+
+- **Android 16 (API 36)**：常驻通知 + `setShortCriticalText` + `setRequestPromotedOngoing(true)`，
+  并在 manifest 声明 `POST_PROMOTED_NOTIFICATIONS`。符合条件的通知由系统提升为状态栏胶囊
+  （Pixel、ColorOS 流体云等）。
+- **小米澎湃 OS 3「超级岛」**：数据接口相同（`miui.focus.param`），但需要开发者在小米开放平台
+  申请白名单、提交场景审核，未通过时系统会过滤；应用侧无法自行开启。
+- **应用内胶囊**：`LyricIsland` 自绘的顶部歌词胶囊，不依赖系统能力，任何 Android 版本都能显示。
+
+实现：`MainActivity.kt` 的 `zmusic/lyric` MethodChannel + `lib/core/app/lyric_notification.dart`；
+开关在 设置 → 歌词 → 状态栏歌词（默认开）。
+
 ## 平台差异
 
 - Android / iOS / macOS：内置 WebView 完成网页登录（`webAuth.runScript` 与 `web` 登录方式）。

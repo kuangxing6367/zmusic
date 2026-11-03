@@ -16,6 +16,7 @@ class LyricSettings extends ChangeNotifier {
   static const _kFontFamily = 'lyric.fontFamily';
   static const _kDesktopFontSize = 'desktopLyric.fontSize';
   static const _kDesktopBackground = 'desktopLyric.background';
+  static const _kIsland = 'lyric.island';
 
   SharedPreferences? _prefs;
 
@@ -29,6 +30,9 @@ class LyricSettings extends ChangeNotifier {
   String fontFamily = '';
   double desktopFontSize = 34;
   double desktopBackgroundOpacity = 0.62;
+
+  /// Status-bar / Dynamic-Island style lyric capsule on phones.
+  bool showIsland = true;
 
   FontWeight get fontWeight => switch (fontWeightValue) {
         300 => FontWeight.w300,
@@ -51,6 +55,7 @@ class LyricSettings extends ChangeNotifier {
     desktopFontSize = (prefs.getDouble(_kDesktopFontSize) ?? desktopFontSize).clamp(18, 38).toDouble();
     desktopBackgroundOpacity =
         (prefs.getDouble(_kDesktopBackground) ?? desktopBackgroundOpacity).clamp(0.0, 0.9).toDouble();
+    showIsland = prefs.getBool(_kIsland) ?? showIsland;
     notifyListeners();
   }
 
@@ -128,6 +133,13 @@ class LyricSettings extends ChangeNotifier {
     desktopBackgroundOpacity = next;
     notifyListeners();
     unawaited(_prefs?.setDouble(_kDesktopBackground, next));
+  }
+
+  void setShowIsland(bool value) {
+    if (value == showIsland) return;
+    showIsland = value;
+    notifyListeners();
+    unawaited(_prefs?.setBool(_kIsland, value));
   }
 }
 
