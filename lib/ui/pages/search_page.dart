@@ -6,6 +6,7 @@ import '../../core/app/app_controller.dart';
 import '../../core/plugin/provider_capability.dart';
 import '../widgets/cards.dart';
 import '../widgets/cover_art.dart';
+import '../widgets/smooth_scroll.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/section_header.dart';
 import '../widgets/song_tile.dart';
@@ -101,7 +102,7 @@ class _SearchPageState extends State<SearchPage> {
             ? _results
             : _results.where((r) => r.providerId == selected).toList();
 
-        return ListView(
+        return SmoothScrollList(
           padding: const EdgeInsets.fromLTRB(18, 10, 18, 130),
           children: [
             Text(

@@ -6,6 +6,7 @@ import '../../core/media/models.dart';
 import '../widgets/cards.dart';
 import '../widgets/cover_art.dart';
 import '../widgets/empty_state.dart';
+import '../widgets/smooth_scroll.dart';
 import '../widgets/song_tile.dart';
 import 'details_page.dart';
 
@@ -58,7 +59,7 @@ class _LibraryPageState extends State<LibraryPage> {
         final artists = library.artists();
         final theme = Theme.of(context);
 
-        return ListView(
+        return SmoothScrollList(
           padding: const EdgeInsets.fromLTRB(18, 10, 18, 130),
           children: [
             Row(

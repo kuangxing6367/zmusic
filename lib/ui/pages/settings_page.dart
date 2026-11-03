@@ -7,6 +7,7 @@ import '../../core/app/appearance_settings.dart';
 import '../../core/playback/playback_controller.dart';
 import '../icon_map.dart';
 import '../widgets/section_header.dart';
+import '../widgets/smooth_scroll.dart';
 import 'plugin_dialog_page.dart';
 import 'plugins_page.dart';
 
@@ -28,7 +29,7 @@ class SettingsPage extends StatelessWidget {
         final theme = Theme.of(context);
         final playback = controller.playback;
         final lyrics = controller.lyricSettings;
-        return ListView(
+        return SmoothScrollList(
           padding: const EdgeInsets.fromLTRB(18, 10, 18, 130),
           children: [
             Text(

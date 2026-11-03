@@ -707,11 +707,24 @@ class _Backdrop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final url = song?.artworkUrl.trim() ?? '';
+    final ratio = MediaQuery.maybeOf(context)?.devicePixelRatio ?? 1.0;
+    final width = MediaQuery.sizeOf(context).width;
+    final cacheWidth = (width * ratio).round().clamp(360, 2400);
     Widget image;
     if (url.startsWith('http://') || url.startsWith('https://')) {
-      image = Image.network(url, fit: BoxFit.cover);
+      image = Image.network(
+        url,
+        fit: BoxFit.cover,
+        cacheWidth: cacheWidth,
+        filterQuality: FilterQuality.low,
+      );
     } else if (url.isNotEmpty && File(url).existsSync()) {
-      image = Image.file(File(url), fit: BoxFit.cover);
+      image = Image.file(
+        File(url),
+        fit: BoxFit.cover,
+        cacheWidth: cacheWidth,
+        filterQuality: FilterQuality.low,
+      );
     } else {
       image = const ColoredBox(color: Color(0xFF141726));
     }

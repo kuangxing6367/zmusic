@@ -12,12 +12,17 @@ class CoverBackdrop extends StatelessWidget {
     super.key,
     required this.url,
     required this.child,
+    this.fallbackUrls = const [],
     this.blur = 38,
     this.tint = 0.55,
     this.decodeWidth = 520,
   });
 
   final String url;
+
+  /// Artwork used to build a blurred mosaic when [url] is empty — a playlist
+  /// without a cover can borrow the covers of its first tracks.
+  final List<String> fallbackUrls;
   final Widget child;
   final double blur;
 
@@ -36,14 +41,27 @@ class CoverBackdrop extends StatelessWidget {
     return ResizeImage(FileImage(file), width: decodeWidth);
   }
 
+  List<ImageProvider> _mosaic() {
+    final seen = <String>{};
+    final providers = <ImageProvider>[];
+    for (final candidate in [url, ...fallbackUrls]) {
+      final value = candidate.trim();
+      if (value.isEmpty || !seen.add(value)) continue;
+      final provider = _provider(value);
+      if (provider != null) providers.add(provider);
+      if (providers.length == 4) break;
+    }
+    return providers;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final surface = theme.scaffoldBackgroundColor;
     final scheme = theme.colorScheme;
-    final provider = _provider(url.trim());
+    final images = _mosaic();
     final dim = (1 - tint).clamp(0.0, 1.0);
-    final hasImage = provider != null;
+    final hasImage = images.isNotEmpty;
 
     return Stack(
       fit: StackFit.expand,
@@ -97,12 +115,7 @@ class CoverBackdrop extends StatelessWidget {
               ),
               child: Transform.scale(
                 scale: 1.2,
-                child: Image(
-                  image: provider,
-                  fit: BoxFit.cover,
-                  filterQuality: FilterQuality.low,
-                  errorBuilder: (_, _, _) => const SizedBox.shrink(),
-                ),
+                child: _CoverCollage(images: images),
               ),
             ),
           ),
@@ -131,6 +144,48 @@ class CoverBackdrop extends StatelessWidget {
           ),
         ),
         child,
+      ],
+    );
+  }
+}
+
+class _CoverCollage extends StatelessWidget {
+  const _CoverCollage({required this.images});
+
+  final List<ImageProvider> images;
+
+  Widget _image(ImageProvider provider) => Image(
+        image: provider,
+        fit: BoxFit.cover,
+        filterQuality: FilterQuality.low,
+        errorBuilder: (_, _, _) => const SizedBox.shrink(),
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    if (images.length == 1) return _image(images.first);
+    final cells = List<ImageProvider>.from(images);
+    while (cells.length < 4) {
+      cells.add(images.last);
+    }
+    return Column(
+      children: [
+        Expanded(
+          child: Row(
+            children: [
+              Expanded(child: _image(cells[0])),
+              Expanded(child: _image(cells[1])),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Row(
+            children: [
+              Expanded(child: _image(cells[2])),
+              Expanded(child: _image(cells[3])),
+            ],
+          ),
+        ),
       ],
     );
   }

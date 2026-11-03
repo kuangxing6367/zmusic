@@ -19,6 +19,18 @@ class CoverArt extends StatelessWidget {
   final IconData icon;
   final Object? heroTag;
 
+  /// Netease's CDN accepts `?param=WxH` and serves a resized JPEG. Asking for
+  /// the drawn size keeps the download and the decoded bitmap small; cards then
+  /// cost ~50 KB instead of ~500 KB each.
+  String _thumbUrl(String url, int pixels) {
+    if (pixels >= 640) return url;
+    final uri = Uri.tryParse(url);
+    if (uri == null || !uri.host.endsWith('music.126.net')) return url;
+    final params = Map<String, String>.from(uri.queryParameters);
+    params['param'] = '${pixels}y$pixels';
+    return uri.replace(queryParameters: params).toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
@@ -28,7 +40,7 @@ class CoverArt extends StatelessWidget {
     Widget image;
     if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
       image = Image.network(
-        trimmed,
+        _thumbUrl(trimmed, cachePixels),
         width: size,
         height: size,
         fit: BoxFit.cover,

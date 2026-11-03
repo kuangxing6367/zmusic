@@ -91,8 +91,8 @@ Future<void> main(List<String> args) async {
   // Artwork is decoded at its drawn size now; keep the cache bounded so a long
   // session does not pin hundreds of full-resolution cover bitmaps in memory.
   PaintingBinding.instance.imageCache
-    ..maximumSize = 400
-    ..maximumSizeBytes = 64 << 20;
+    ..maximumSize = 240
+    ..maximumSizeBytes = 32 << 20;
 
   // Secondary engines spawned by desktop_multi_window run this same entry
   // point. The engine arguments normally say so; the window-class fallback

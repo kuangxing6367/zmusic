@@ -86,6 +86,7 @@ class _AppBackdropState extends State<AppBackdrop> {
       settings.backdropSource,
       customUrl: settings.backdropUrl,
       revision: settings.backdropRevision,
+      displayWidth: View.of(context).display.size.width,
     );
     if (!mounted || token != _token) return;
     setState(() => _url = url);
@@ -100,12 +101,16 @@ class _AppBackdropState extends State<AppBackdrop> {
   }
 
   /// Quantised decode width: dragging the window edge must not re-decode the
-  /// wallpaper on every frame.
-  int _decodeWidth(double width) {
-    final pixels = width * 1.15;
-    if (pixels <= 1024) return 1024;
+  /// wallpaper on every frame. Buckets scale up to 4K so a maximised window on
+  /// a high-DPI monitor is not stuck with a 1080p bitmap.
+  int _decodeWidth(double logicalWidth, double dpr) {
+    final pixels = logicalWidth * dpr * 1.1;
+    if (pixels <= 1280) return 1280;
     if (pixels <= 1600) return 1600;
-    return 2200;
+    if (pixels <= 1920) return 1920;
+    if (pixels <= 2560) return 2560;
+    if (pixels <= 3200) return 3200;
+    return 3840;
   }
 
   @override
@@ -114,6 +119,7 @@ class _AppBackdropState extends State<AppBackdrop> {
     final settings = widget.settings;
     final dim = (1 - settings.backdropOpacity).clamp(0.0, 1.0);
     final width = MediaQuery.sizeOf(context).width;
+    final dpr = MediaQuery.devicePixelRatioOf(context);
 
     return Stack(
       fit: StackFit.expand,
@@ -146,7 +152,7 @@ class _AppBackdropState extends State<AppBackdrop> {
                   ),
                   child: Image(
                     key: ValueKey(_url),
-                    image: _provider(_url, _decodeWidth(width)),
+                    image: _provider(_url, _decodeWidth(width, dpr)),
                     fit: BoxFit.cover,
                     gaplessPlayback: true,
                     filterQuality: FilterQuality.low,

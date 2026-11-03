@@ -5,6 +5,7 @@ import '../../core/media/models.dart';
 import '../../core/plugin/provider_capability.dart';
 import '../widgets/cards.dart';
 import '../widgets/cover_art.dart';
+import '../widgets/smooth_scroll.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/section_header.dart';
 import 'details_page.dart';
@@ -25,7 +26,7 @@ class HomePage extends StatelessWidget {
         final enabled = controller.enabledProviders;
         return RefreshIndicator(
           onRefresh: controller.refreshHome,
-          child: ListView(
+          child: SmoothScrollList(
             physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.fromLTRB(18, 8, 18, 130),
             children: [

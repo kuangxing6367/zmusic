@@ -33,6 +33,7 @@ class BackdropService {
     BackdropSource source, {
     String customUrl = '',
     int revision = 0,
+    double displayWidth = 0,
   }) async {
     switch (source) {
       case BackdropSource.none:
@@ -41,7 +42,7 @@ class BackdropService {
       case BackdropSource.custom:
         return customUrl.trim();
       case BackdropSource.bing:
-        return _cached('bing:$revision', _bing);
+        return _cached('bing:$revision', () => _bing(displayWidth));
       case BackdropSource.furry:
         return _cached('furry:$revision', _furry);
     }
@@ -64,7 +65,7 @@ class BackdropService {
     }
   }
 
-  Future<String> _bing() async {
+  Future<String> _bing(double displayWidth) async {
     // idx 0 is today, -1 yesterday; sample the last week like the classic
     // "random Bing wallpaper" snippets.
     final idx = _random.nextInt(9) - 1;
@@ -85,7 +86,9 @@ class BackdropService {
     if (first is! Map) return '';
     final base = first['urlbase']?.toString() ?? '';
     if (base.isEmpty) return '';
-    return 'https://www.bing.com${base}_1920x1080.jpg';
+    // 1080p is upscaled to mush on a 2K/4K monitor; Bing serves a UHD variant.
+    final suffix = displayWidth >= 2560 ? '_UHD.jpg' : '_1920x1080.jpg';
+    return 'https://www.bing.com$base$suffix';
   }
 
   Future<String> _furry() async {

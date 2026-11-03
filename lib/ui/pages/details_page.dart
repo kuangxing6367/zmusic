@@ -8,6 +8,7 @@ import '../../core/media/models.dart';
 import '../widgets/cards.dart';
 import '../widgets/cover_backdrop.dart';
 import '../widgets/empty_state.dart';
+import '../widgets/smooth_scroll.dart';
 import '../widgets/song_tile.dart';
 
 class PlaylistDetailPage extends StatefulWidget {
@@ -194,21 +195,24 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                 itemCount: math.min(_visibleSongs.length, _shown),
                 itemBuilder: (context, index) {
                   final song = _visibleSongs[index];
-                  return SongTile(
-                    song: song,
-                    controller: widget.controller,
-                    playback: widget.controller.playback,
-                    index: index,
-                    showCover: false,
-                    onTap: () {
-                      final list = _visibleSongs;
-                      final position = list.indexOf(song);
-                      widget.controller.playback.playSongs(
-                        list,
-                        index: position < 0 ? 0 : position,
-                        contextName: _playlist.name,
-                      );
-                    },
+                  return SmoothScrollItem(
+                    controller: _scroll,
+                    child: SongTile(
+                      song: song,
+                      controller: widget.controller,
+                      playback: widget.controller.playback,
+                      index: index,
+                      showCover: false,
+                      onTap: () {
+                        final list = _visibleSongs;
+                        final position = list.indexOf(song);
+                        widget.controller.playback.playSongs(
+                          list,
+                          index: position < 0 ? 0 : position,
+                          contextName: _playlist.name,
+                        );
+                      },
+                    ),
                   );
                 },
               ),
@@ -243,6 +247,10 @@ class _Header extends StatelessWidget {
     final theme = Theme.of(context);
     return CoverBackdrop(
       url: playlist.coverUrl,
+      fallbackUrls: [
+        for (final song in playlist.songs.take(4))
+          if (song.artworkUrl.isNotEmpty) song.artworkUrl,
+      ],
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -346,6 +354,7 @@ class AlbumDetailPage extends StatefulWidget {
 class _AlbumDetailPageState extends State<AlbumDetailPage> {
   late Album _album = widget.album;
   final TextEditingController _filterText = TextEditingController();
+  final ScrollController _scroll = ScrollController();
   bool _loading = false;
   bool _searchOpen = false;
   String _filter = '';
@@ -360,6 +369,7 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
   @override
   void dispose() {
     _filterText.dispose();
+    _scroll.dispose();
     super.dispose();
   }
 
@@ -415,6 +425,7 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
       body: RefreshIndicator(
         onRefresh: _load,
         child: CustomScrollView(
+          controller: _scroll,
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
             SliverAppBar(
@@ -495,21 +506,24 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
                 itemCount: _visibleSongs.length,
                 itemBuilder: (context, index) {
                   final song = _visibleSongs[index];
-                  return SongTile(
-                    song: song,
-                    controller: widget.controller,
-                    playback: widget.controller.playback,
-                    index: index,
-                    showCover: false,
-                    onTap: () {
-                      final list = _visibleSongs;
-                      final position = list.indexOf(song);
-                      widget.controller.playback.playSongs(
-                        list,
-                        index: position < 0 ? 0 : position,
-                        contextName: _album.name,
-                      );
-                    },
+                  return SmoothScrollItem(
+                    controller: _scroll,
+                    child: SongTile(
+                      song: song,
+                      controller: widget.controller,
+                      playback: widget.controller.playback,
+                      index: index,
+                      showCover: false,
+                      onTap: () {
+                        final list = _visibleSongs;
+                        final position = list.indexOf(song);
+                        widget.controller.playback.playSongs(
+                          list,
+                          index: position < 0 ? 0 : position,
+                          contextName: _album.name,
+                        );
+                      },
+                    ),
                   );
                 },
               ),
@@ -550,6 +564,7 @@ class ArtistDetailPage extends StatefulWidget {
 class _ArtistDetailPageState extends State<ArtistDetailPage> {
   late Artist _artist = widget.artist;
   final TextEditingController _filterText = TextEditingController();
+  final ScrollController _scroll = ScrollController();
   bool _loading = false;
   bool _searchOpen = false;
   String _filter = '';
@@ -564,6 +579,7 @@ class _ArtistDetailPageState extends State<ArtistDetailPage> {
   @override
   void dispose() {
     _filterText.dispose();
+    _scroll.dispose();
     super.dispose();
   }
 
@@ -618,6 +634,7 @@ class _ArtistDetailPageState extends State<ArtistDetailPage> {
       body: RefreshIndicator(
         onRefresh: _load,
         child: CustomScrollView(
+          controller: _scroll,
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
             SliverAppBar(
@@ -738,21 +755,24 @@ class _ArtistDetailPageState extends State<ArtistDetailPage> {
                   itemCount: _visibleSongs.length,
                   itemBuilder: (context, index) {
                     final song = _visibleSongs[index];
-                    return SongTile(
-                      song: song,
-                      controller: widget.controller,
-                      playback: widget.controller.playback,
-                      index: index,
-                      showCover: false,
-                      onTap: () {
-                        final list = _visibleSongs;
-                        final position = list.indexOf(song);
-                        widget.controller.playback.playSongs(
-                          list,
-                          index: position < 0 ? 0 : position,
-                          contextName: _artist.name,
-                        );
-                      },
+                    return SmoothScrollItem(
+                      controller: _scroll,
+                      child: SongTile(
+                        song: song,
+                        controller: widget.controller,
+                        playback: widget.controller.playback,
+                        index: index,
+                        showCover: false,
+                        onTap: () {
+                          final list = _visibleSongs;
+                          final position = list.indexOf(song);
+                          widget.controller.playback.playSongs(
+                            list,
+                            index: position < 0 ? 0 : position,
+                            contextName: _artist.name,
+                          );
+                        },
+                      ),
                     );
                   },
                 ),

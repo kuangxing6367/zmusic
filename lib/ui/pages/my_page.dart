@@ -7,6 +7,7 @@ import '../../core/media/models.dart';
 import '../widgets/cards.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/section_header.dart';
+import '../widgets/smooth_scroll.dart';
 import '../widgets/song_tile.dart';
 import 'details_page.dart';
 import 'login_page.dart';
@@ -133,7 +134,7 @@ class _MyPageState extends State<MyPage> {
     final history = _controller.history.take(30).toList();
     final songs = history.map((entry) => entry.song).toList();
 
-    return ListView(
+    return SmoothScrollList(
       padding: const EdgeInsets.fromLTRB(18, 10, 18, 130),
       children: [
         Row(
