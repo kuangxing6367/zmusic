@@ -21,6 +21,11 @@ jobs:
           channel: stable
           cache: true
 
+      - name: Version
+        id: ver
+        shell: bash
+        run: echo "value=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
       - name: Dependencies
         run: flutter pub get
 
@@ -33,9 +38,9 @@ jobs:
       - name: Package
         shell: pwsh
         run: |
-          $tag = "${{ github.ref_name }}"
           Compress-Archive -Path build/windows/x64/runner/Release/* `
-            -DestinationPath "zmusic-$tag-windows-x64.zip" -CompressionLevel Optimal
+            -DestinationPath "zmusic-${{ steps.ver.outputs.value }}-windows-x64.zip" `
+            -CompressionLevel Optimal
 
       - uses: actions/upload-artifact@v4
         with:
@@ -59,6 +64,11 @@ jobs:
           channel: stable
           cache: true
 
+      - name: Version
+        id: ver
+        shell: bash
+        run: echo "value=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
       - name: Dependencies
         run: flutter pub get
 
@@ -67,8 +77,8 @@ jobs:
 
       - name: Package
         run: |
-          tag="${{ github.ref_name }}"
-          cp build/app/outputs/flutter-apk/app-release.apk "zmusic-$tag-android.apk"
+          cp build/app/outputs/flutter-apk/app-release.apk \
+            "zmusic-${{ steps.ver.outputs.value }}-android.apk"
 
       - uses: actions/upload-artifact@v4
         with:
