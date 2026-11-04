@@ -42,7 +42,7 @@ class PluginPackageException implements Exception {
   String toString() => message;
 }
 
-/// Strict verifier for deterministic QPlayer `.qplug` archives.
+/// Strict verifier for deterministic `.qplug` archives.
 class PluginPackageVerifier {
   static const String hashesPath = 'META-INF/qplayer-files.json';
   static const String signaturePath = 'META-INF/qplayer.sig';

@@ -15,7 +15,7 @@ import 'yrc_parser.dart';
 
 /// Format dispatcher for plugin-provided and local lyric files.
 ///
-/// Mirrors QPlayer's `LyricParser`: pick a backend by declared format or file
+/// Picks a backend by declared format or file
 /// extension, then merge translation / romanization sidecars onto the nearest
 /// main line by start time.
 class LyricParser {

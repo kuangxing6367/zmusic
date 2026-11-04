@@ -27,8 +27,8 @@ typedef PluginHostCall = Future<dynamic> Function(
 
 /// One isolated JavaScript actor for one enabled source plugin.
 ///
-/// Mirrors QPlayer's Rhino runtime: CommonJS modules, a narrow
-/// `qplayer.call()` bridge, serialized handler execution and a 90s deadline.
+/// CommonJS sandbox for .qplug plugins: a narrow `qplayer.call()` bridge and
+/// a 90s deadline per call.
 class PluginRuntime {
   PluginRuntime({
     required this.root,

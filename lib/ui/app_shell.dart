@@ -229,7 +229,7 @@ class _AnimatedTabStack extends StatefulWidget {
   State<_AnimatedTabStack> createState() => _AnimatedTabStackState();
 }
 
-/// Root navigation motion copied from QPlayer's PageMotion: the outgoing page
+/// Root navigation motion: the outgoing page
 /// fades/scales/slides away for 220 ms, then the incoming one settles in from
 /// the opposite edge for another 220 ms. Pages stay alive in the tree so scroll
 /// offsets and form state survive switches.

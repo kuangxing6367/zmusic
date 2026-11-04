@@ -3,7 +3,7 @@ import 'lyric_models.dart';
 /// Per-word timestamped LRC used by some custom-API backends (QQ lyrics from
 /// `go-music-api`): `朝[00:42.31]花[00:42.51]岁[00:42.79]`.
 ///
-/// Ported from QPlayer's `WordTimeLrcParser`.
+/// Word-timed LRC with inline `<mm:ss.xx>` tags.
 class WordTimeLrcParser {
   WordTimeLrcParser._();
 

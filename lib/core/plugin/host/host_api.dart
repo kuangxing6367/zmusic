@@ -359,7 +359,7 @@ class CorePluginHostApi {
       validateStatus: (_) => true,
       responseType: ResponseType.bytes,
     ));
-    // Match QPlayer: when the plugin did not choose an encoding, negotiate gzip
+    // When the plugin did not choose an encoding, negotiate gzip
     // and decode it here instead of relying on the HTTP client's transparency.
     final pluginEncoding = headers.keys
         .firstWhere((key) => key.toLowerCase() == 'accept-encoding',

@@ -5,7 +5,7 @@ import 'media_kind.dart';
 /// Collision-free identity for media owned by a source plugin.
 ///
 /// Wire form: `provider:kind:percent-encoded-native-id`
-/// (same contract as QPlayer's Java `MediaId`).
+/// (same public contract the plugin ABI expects).
 class MediaId {
   const MediaId(this.provider, this.kind, this.nativeId);
 

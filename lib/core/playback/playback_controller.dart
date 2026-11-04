@@ -371,7 +371,7 @@ class PlaybackController extends ChangeNotifier {
   }
 
   /// Plugin-initiated selection by native or canonical id inside the current
-  /// queue, mirroring QPlayer's `pluginSongId` + `selectPluginTrack`.
+  /// queue, keeping the plugin-side song id and selected track in sync.
   Future<bool> selectFromPlugin(
     String pluginId,
     String songId,

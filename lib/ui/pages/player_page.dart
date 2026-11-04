@@ -440,7 +440,7 @@ class _PlayerPageState extends State<PlayerPage> {
   }
 }
 
-/// QPlayer's AMLL cover motion: pause shrinks the artwork to 75% over 600 ms,
+/// AMLL-style cover motion: pause shrinks the artwork to 75% over 600 ms,
 /// resume springs it back with a small overshoot over 500 ms.
 class _PlaybackCover extends StatefulWidget {
   const _PlaybackCover({

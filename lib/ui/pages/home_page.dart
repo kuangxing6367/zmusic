@@ -488,7 +488,7 @@ class _PlaylistRail extends StatelessWidget {
   }
 }
 
-/// QPlayer's refresh affordance: the sync glyph turns while a reload is in
+/// Refresh affordance: the sync glyph turns while a reload is in
 /// flight (700 ms per revolution) and rests at zero otherwise.
 class _RefreshIcon extends StatefulWidget {
   const _RefreshIcon({required this.spinning});

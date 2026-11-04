@@ -1,4 +1,4 @@
-/// Vocal channel of a lyric line, mirroring QPlayer's `LyricLine.VocalChannel`.
+/// Vocal channel of a lyric line.
 enum LyricVocalChannel {
   main,
   background,
@@ -40,7 +40,7 @@ class LyricSyllable {
 }
 
 /// One sung line; text is the concatenation of its syllables, matching
-/// QPlayer's Java model (syllables are the source of truth for timing).
+/// The syllable list is the source of truth for timing.
 class LyricLine {
   LyricLine({
     List<LyricSyllable>? syllables,

@@ -1,7 +1,7 @@
 import 'lrc_parser.dart';
 import 'lyric_models.dart';
 
-/// AMLL-style Enhanced LRC (`.eslrc`), ported from QPlayer's `EsLrcParser`.
+/// AMLL-style Enhanced LRC (`.eslrc`).
 ///
 /// Every syllable is prefixed by its own `[mm:ss.xxx]`, and the line is
 /// normally terminated by a final bare timestamp.

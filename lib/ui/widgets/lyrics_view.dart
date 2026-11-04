@@ -9,7 +9,7 @@ import '../../core/lyric/lyric_models.dart';
 
 /// Scrolling lyric view with syllable-level karaoke highlighting.
 ///
-/// The motion model mirrors QPlayer's Skia renderer (which ports AMLL):
+/// The motion model follows AMLL's scrolling lyric renderer:
 ///
 /// * the active line is pinned at 35% of the column height;
 /// * the column is driven by a spring (k = 65, damping = 11) instead of a
@@ -81,7 +81,7 @@ class _LyricRow {
 
 class _LyricsViewState extends State<LyricsView>
     with SingleTickerProviderStateMixin {
-  // ---- Motion constants, lifted from QPlayer's LyricRenderer ---------------
+  // ---- Motion constants ----------------------------------------------------
   static const double _anchor = 0.35; // active line sits above the centre
   static const double _stiffness = 65; // AMLL computeLinePosYSpringParams
   static const double _damping = 11; // zeta ~ 0.68: one soft overshoot
@@ -95,7 +95,7 @@ class _LyricsViewState extends State<LyricsView>
   static const int _fadeOutMs = 350;
   static const int _fadeOutDelayMs = 100;
 
-  // ---- Interlude dots (ported from AMLL / QPlayer LyricRenderer) -----------
+  // ---- Interlude dots (AMLL style) -----------------------------------------
   static const int _interludeThresholdMs = 2000; // min gap to show dots
   static const int _interludeTrimMs = 250; // next line trims the tail
   static const double _interludeRowHeight = 40;
@@ -921,8 +921,8 @@ class _LyricsViewState extends State<LyricsView>
     final baseSize = small ? widget.fontSize * 0.64 : widget.fontSize;
 
     // The unsung part of the active line stays clearly dimmer than the lit
-    // part, otherwise the sweep is invisible (white on white). This mirrors
-    // QPlayer: the whole row is drawn, then only the sung part is raised.
+    // part, otherwise the sweep is invisible (white on white): the whole row
+    // is drawn, then only the sung part is raised.
     final rest = small
         ? base.withValues(alpha: base.a * 0.75)
         : theme.colorScheme.onSurfaceVariant

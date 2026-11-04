@@ -180,22 +180,22 @@ class AppTheme {
       ),
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: <TargetPlatform, PageTransitionsBuilder>{
-          TargetPlatform.android: _QPlayerPageTransitionsBuilder(),
-          TargetPlatform.iOS: _QPlayerPageTransitionsBuilder(),
-          TargetPlatform.linux: _QPlayerPageTransitionsBuilder(),
-          TargetPlatform.macOS: _QPlayerPageTransitionsBuilder(),
-          TargetPlatform.windows: _QPlayerPageTransitionsBuilder(),
-          TargetPlatform.fuchsia: _QPlayerPageTransitionsBuilder(),
+          TargetPlatform.android: _AppPageTransitionsBuilder(),
+          TargetPlatform.iOS: _AppPageTransitionsBuilder(),
+          TargetPlatform.linux: _AppPageTransitionsBuilder(),
+          TargetPlatform.macOS: _AppPageTransitionsBuilder(),
+          TargetPlatform.windows: _AppPageTransitionsBuilder(),
+          TargetPlatform.fuchsia: _AppPageTransitionsBuilder(),
         },
       ),
     );
   }
 }
 
-/// QPlayer's route motion: cross-fade while settling from 94% scale with an
+/// Route motion: cross-fade while settling from 94% scale with an
 /// OutCubic entry and an InCubic exit.
-class _QPlayerPageTransitionsBuilder extends PageTransitionsBuilder {
-  const _QPlayerPageTransitionsBuilder();
+class _AppPageTransitionsBuilder extends PageTransitionsBuilder {
+  const _AppPageTransitionsBuilder();
 
   @override
   Widget buildTransitions<T>(

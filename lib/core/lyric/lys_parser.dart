@@ -1,6 +1,6 @@
 import 'lyric_models.dart';
 
-/// Lyricify Syllable (`.lys`) parser, ported from QPlayer's `LysParser`.
+/// Lyricify Syllable (`.lys`) parser.
 ///
 /// Each line: `[propertyN]text(startMs,durationMs)text(startMs,durationMs)…`
 /// The leading `[N]` selects the vocal channel.

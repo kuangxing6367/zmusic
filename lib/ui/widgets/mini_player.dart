@@ -140,7 +140,7 @@ class MiniPlayer extends StatelessWidget {
   }
 }
 
-/// QPlayer's mini progress: a 450 ms OutCubic catch-up after seeks, plus a
+/// Mini progress: a 450 ms OutCubic catch-up after seeks, plus a
 /// sweeping indeterminate bar while the next stream is being resolved.
 class _MiniProgress extends StatelessWidget {
   const _MiniProgress({

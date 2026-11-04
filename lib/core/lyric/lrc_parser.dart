@@ -1,8 +1,8 @@
 import 'lyric_models.dart';
 
-/// LRC parser with Enhanced-LRC ("A2 extension") support, ported from
-/// QPlayer's `LrcParser`. Plain lines are `[mm:ss.xx]text`; inline
-/// `<mm:ss.xx>` tags split the body into karaoke syllables.
+/// LRC parser with Enhanced-LRC ("A2 extension") support. Plain lines are
+/// `[mm:ss.xx]text`; inline `<mm:ss.xx>` tags split the body into karaoke
+/// syllables.
 class LrcParser {
   LrcParser._();
 

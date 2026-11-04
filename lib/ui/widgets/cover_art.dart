@@ -86,7 +86,7 @@ class CoverArt extends StatelessWidget {
     return Hero(tag: heroTag!, child: clipped);
   }
 
-  /// QPlayer's CoverImage settles in over 260 ms instead of popping.
+  /// Covers settle in over 260 ms instead of popping.
   Widget _fadeIn(
     BuildContext context,
     Widget child,

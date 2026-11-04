@@ -1,6 +1,6 @@
 import 'lyric_models.dart';
 
-/// NetEase Cloud Music YRC parser, ported from QPlayer's `YrcParser`.
+/// NetEase Cloud Music YRC parser.
 ///
 /// Each line: `[lineStartMs,lineDurationMs](sylStart,sylDur,flag)text...`
 /// Background vocals are inlined in full-width parentheses `（…）`; they are

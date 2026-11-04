@@ -16,7 +16,7 @@ class ProviderException implements Exception {
   String toString() => message;
 }
 
-/// Translates QPlayer plugin handler results into host DTOs and qualifies
+/// Translates .qplug handler results into host DTOs and qualifies
 /// native ids exactly like the original Java host.
 class PluginProviderService {
   PluginProviderService({
@@ -472,7 +472,7 @@ class PluginProviderService {
       _parseSongList(provider, raw, max: 5000);
 
   /// Strict variant used by `queue.replace`: unlike ordinary lists, malformed
-  /// entries reject the whole array (matching QPlayer's Java host).
+  /// entries reject the whole array.
   List<Song> validateSongsStrict(String provider, Object? raw) {
     if (raw is! List || raw.isEmpty || raw.length > 500) {
       throw ProviderException('播放队列格式错误');

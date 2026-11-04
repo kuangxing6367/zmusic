@@ -32,7 +32,7 @@
 | 限制 | 单模块 ≤ 4 MiB、包 ≤ 512 文件 / 64 MiB、禁止 `require` 包外文件、无 `setTimeout`/`fetch` |
 | 歌词 | LRC、A2 增强 LRC、ESLRC、YRC、QRC、WordTimeLRC、LYS、TTML，含翻译 / 罗马音 / 声部通道 |
 
-宿主实现的方法与 QPlayer 插件文档中的表格一一对应：
+宿主实现的方法与 `.qplug` 插件 ABI 一一对应：
 
 `http.request`、`storage.get/put/delete`、`credentials.get/put/delete`、`crypto.digest/hmac/aes/random/modPow`、
 `compression.gunzip`、`clipboard.write`、`notifications.toast`、`files.save`、`files.downloadCurrent`、
@@ -135,7 +135,7 @@ Windows 首次构建时 `media_kit_libs_windows_audio` 会从 GitHub 下载 `lib
   （需要 `FLUTTER_ROOT` 指向 Flutter SDK）。
 - Release 可执行文件：`build\windows\x64\runner\Release\zmusic.exe`。
 
-## 参考
+## 插件协议
 
-- QPlayer 插件 ABI 与安全模型：<https://github.com/TIMER-err/qplayer>
-- 原始 Rhino 运行时：`player-core/src/main/java/dev/t1m3/qplayer/plugin/PluginRuntime.java`
+- `.qplug` 的 ABI 与安全模型与 QPlayer 共享，官方插件包无需改动即可安装、验证、运行。
+- 协议与插件市场：<https://github.com/TIMER-err/qplayer>

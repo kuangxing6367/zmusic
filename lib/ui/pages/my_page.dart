@@ -13,7 +13,7 @@ import 'details_page.dart';
 import 'login_page.dart';
 
 /// "我的" tab: the signed-in account, playlists owned by that account and the
-/// locally recorded play history. Mirrors QPlayer's LibraryPage/AccountPage.
+/// locally recorded play history.
 class MyPage extends StatefulWidget {
   const MyPage({super.key, required this.controller});
 

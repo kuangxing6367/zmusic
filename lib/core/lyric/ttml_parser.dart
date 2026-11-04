@@ -2,7 +2,7 @@ import 'package:xml/xml.dart';
 
 import 'lyric_models.dart';
 
-/// AMLL-flavoured TTML parser, ported from QPlayer's `TtmlParser`.
+/// AMLL-flavoured TTML parser.
 ///
 /// Each `<p>` is one line and its `<span>` children are syllables. Vocal
 /// channels come from `ttm:agent` declarations; inline `x-translation`,

@@ -1,6 +1,6 @@
 import 'lyric_models.dart';
 
-/// QQ Music QRC parser, ported from QPlayer's `QrcParser`.
+/// QQ Music QRC parser.
 ///
 /// Each line: `[lineStartMs,lineDurationMs]text(startMs,dur)text(startMs,dur)…`
 class QrcParser {

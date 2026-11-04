@@ -10,7 +10,7 @@ import 'app_controller.dart';
 import 'desktop_lyric_service.dart';
 
 /// Windows shell integration: tray icon, close-to-tray, SMTC media keys and
-/// the desktop lyric window. Mirrors QPlayer's desktop-host integration.
+/// the desktop lyric window.
 class SystemIntegration with WindowListener, TrayListener {
   SystemIntegration({required this.controller})
       : desktopLyrics = DesktopLyricService(

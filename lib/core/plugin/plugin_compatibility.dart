@@ -7,8 +7,8 @@ class PluginCompatibility {
   /// ABI implemented by this host.
   static const String apiVersion = '1.0';
 
-  /// Reported host version. Kept at the QPlayer line this app is compatible
-  /// with, so official plugins authored for QPlayer 1.9.x accept this host.
+  /// Reported host version, matching the plugin ABI this app implements so
+  /// plugins authored for the 1.9 line accept this host.
   static const String hostVersion = '1.9.7';
 
   static void requireCompatible(PluginManifest manifest) {

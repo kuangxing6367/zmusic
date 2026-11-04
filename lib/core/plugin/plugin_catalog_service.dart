@@ -50,7 +50,7 @@ class CatalogRelease {
 }
 
 /// Reads the bundled, host-pinned plugin catalog and queries GitHub's latest
-/// release endpoint for each repository (mirrors PluginCatalogService).
+/// release endpoint for each repository.
 class PluginCatalogService {
   PluginCatalogService({Dio? dio}) : _dio = dio ?? Dio();
 
