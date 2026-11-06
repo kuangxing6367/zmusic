@@ -30,7 +30,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
 
   late Playlist _playlist = widget.playlist;
   final TextEditingController _filterText = TextEditingController();
-  final ScrollController _scroll = ScrollController();
+  final ScrollController _scroll = SmoothScrollController();
   bool _loading = false;
   bool _searchOpen = false;
   String _filter = '';
@@ -354,7 +354,7 @@ class AlbumDetailPage extends StatefulWidget {
 class _AlbumDetailPageState extends State<AlbumDetailPage> {
   late Album _album = widget.album;
   final TextEditingController _filterText = TextEditingController();
-  final ScrollController _scroll = ScrollController();
+  final ScrollController _scroll = SmoothScrollController();
   bool _loading = false;
   bool _searchOpen = false;
   String _filter = '';
@@ -564,7 +564,7 @@ class ArtistDetailPage extends StatefulWidget {
 class _ArtistDetailPageState extends State<ArtistDetailPage> {
   late Artist _artist = widget.artist;
   final TextEditingController _filterText = TextEditingController();
-  final ScrollController _scroll = ScrollController();
+  final ScrollController _scroll = SmoothScrollController();
   bool _loading = false;
   bool _searchOpen = false;
   String _filter = '';

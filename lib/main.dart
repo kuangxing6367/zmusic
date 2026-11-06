@@ -19,6 +19,7 @@ import 'ui/theme.dart';
 import 'ui/widgets/app_toast.dart';
 import 'ui/widgets/lyric_island.dart';
 import 'ui/widgets/mini_player.dart';
+import 'ui/widgets/smooth_scroll.dart';
 import 'ui/windows/desktop_lyric_window.dart';
 
 SystemIntegration? _systemIntegration;
@@ -261,6 +262,7 @@ class _ZMusicApp extends StatelessWidget {
               _ => ThemeMode.system,
             },
             themeAnimationDuration: const Duration(milliseconds: 240),
+            scrollBehavior: const AppScrollBehavior(),
             locale: const Locale('zh', 'CN'),
             supportedLocales: const [
               Locale('zh', 'CN'),

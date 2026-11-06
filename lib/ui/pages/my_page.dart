@@ -217,11 +217,13 @@ class _MyPageState extends State<MyPage> {
           else
             LayoutBuilder(
               builder: (context, constraints) {
-                // Fit as many 160 dp cards as the width allows, then stretch
-                // them so the row is filled edge to edge instead of leaving a
-                // gap on narrow phones.
+                // Fit roughly 168 dp cards, then stretch them so the row is
+                // filled edge to edge instead of leaving a gap on the right
+                // (the classic symptom on 360–420 dp phones).
                 const spacing = 14.0;
-                final columns = (constraints.maxWidth / 168).floor().clamp(1, 8);
+                final columns = ((constraints.maxWidth + spacing) / (168 + spacing))
+                    .round()
+                    .clamp(1, 8);
                 final cardWidth =
                     (constraints.maxWidth - spacing * (columns - 1)) / columns;
                 return Wrap(
