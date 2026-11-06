@@ -11,7 +11,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:windows_single_instance/windows_single_instance.dart';
 
 import 'core/app/app_controller.dart';
-import 'core/app/lyric_notification.dart';
+import 'core/app/lyric_bridge.dart';
 import 'core/app/system_integration.dart';
 import 'ui/app_shell.dart';
 import 'ui/player_route.dart';
@@ -150,7 +150,7 @@ Future<void> main(List<String> args) async {
 
   await controller.initialize();
   if (controller.initError.isEmpty) {
-    LyricNotification.instance.attach(controller);
+    LyricBridge.instance.attach(controller);
     _systemIntegration = SystemIntegration(controller: controller);
     await _systemIntegration!.init();
   }
@@ -231,11 +231,14 @@ class _ZMusicApp extends StatelessWidget {
                                       Platform.isAndroid || Platform.isIOS;
                                   if (!mobile ||
                                       !controller.initialized ||
-                                      !controller.lyricSettings.showIsland) {
+                                      !controller.lyricSettings
+                                          .showIslandCapsule) {
                                     return const SizedBox.shrink();
                                   }
                                   return LyricIsland(
                                     playback: controller.playback,
+                                    showLyrics: controller
+                                        .lyricSettings.islandLyrics,
                                     onTap: () =>
                                         openPlayer(navigatorKey, controller),
                                   );

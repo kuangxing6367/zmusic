@@ -215,25 +215,36 @@ class _MyPageState extends State<MyPage> {
               text: '这个账号还没有歌单。',
             )
           else
-            Wrap(
-              spacing: 14,
-              runSpacing: 14,
-              children: [
-                for (final playlist in _playlists)
-                  PlaylistCard(
-                    playlist: playlist,
-                    width: 160,
-                    subtitle: playlist.owner?.name,
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (_) => PlaylistDetailPage(
-                          controller: _controller,
-                          playlist: playlist,
+            LayoutBuilder(
+              builder: (context, constraints) {
+                // Fit as many 160 dp cards as the width allows, then stretch
+                // them so the row is filled edge to edge instead of leaving a
+                // gap on narrow phones.
+                const spacing = 14.0;
+                final columns = (constraints.maxWidth / 168).floor().clamp(1, 8);
+                final cardWidth =
+                    (constraints.maxWidth - spacing * (columns - 1)) / columns;
+                return Wrap(
+                  spacing: spacing,
+                  runSpacing: spacing,
+                  children: [
+                    for (final playlist in _playlists)
+                      PlaylistCard(
+                        playlist: playlist,
+                        width: cardWidth,
+                        subtitle: playlist.owner?.name,
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                            builder: (_) => PlaylistDetailPage(
+                              controller: _controller,
+                              playlist: playlist,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-              ],
+                  ],
+                );
+              },
             ),
           SectionHeader(
             title: '最近播放',

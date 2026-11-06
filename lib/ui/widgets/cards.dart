@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../core/media/models.dart';
@@ -106,44 +108,56 @@ class AlbumCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return SizedBox(
-      width: width,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(18),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CoverArtFrame(
-              url: album.coverUrl,
-              size: width,
-              radius: 18,
-              icon: Icons.album_rounded,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Grid cells can be narrower than the preferred width (phones); use
+        // whatever the cell gives us so albums fill the row.
+        final maxHeight = constraints.maxHeight.isFinite
+            ? math.max(80.0, constraints.maxHeight - 54)
+            : double.infinity;
+        final cardWidth = constraints.maxWidth.isFinite
+            ? math.min(math.min(width, constraints.maxWidth), maxHeight)
+            : width;
+        return SizedBox(
+          width: cardWidth,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(18),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CoverArtFrame(
+                  url: album.coverUrl,
+                  size: cardWidth,
+                  radius: 18,
+                  icon: Icons.album_rounded,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  album.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    height: 1.25,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  album.artistLabel.isNotEmpty
+                      ? album.artistLabel
+                      : '${album.trackCount} 首',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
-            Text(
-              album.name,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.w700,
-                height: 1.25,
-              ),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              album.artistLabel.isNotEmpty
-                  ? album.artistLabel
-                  : '${album.trackCount} 首',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

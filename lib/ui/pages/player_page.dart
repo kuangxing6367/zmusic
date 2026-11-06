@@ -779,14 +779,14 @@ class _NarrowLayout extends StatelessWidget {
       builder: (context, constraints) {
         final compact = constraints.maxHeight < 720;
         final coverSize = math.min(
-          constraints.maxWidth * 0.58,
-          math.min(compact ? 208.0 : 260.0, constraints.maxHeight * 0.24),
+          constraints.maxWidth * 0.64,
+          math.min(compact ? 244.0 : 300.0, constraints.maxHeight * 0.30),
         );
         return Padding(
-          padding: const EdgeInsets.fromLTRB(20, 4, 20, 10),
+          padding: const EdgeInsets.fromLTRB(18, 2, 18, 8),
           child: Column(
             children: [
-              const SizedBox(height: 6),
+              const SizedBox(height: 4),
               _PlaybackCover(
                 song: song,
                 size: coverSize,

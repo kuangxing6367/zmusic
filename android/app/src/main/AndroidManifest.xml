@@ -2,6 +2,10 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.POST_PROMOTED_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
     <application
         android:label="zmusic"
         android:name="${applicationName}"
@@ -34,6 +38,16 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <!-- Tells Lyricon (词幕) that this app is a lyric provider module. -->
+        <meta-data android:name="lyricon_module" android:value="true" />
+        <meta-data android:name="lyricon_module_author" android:value="zmusic" />
+        <meta-data
+            android:name="lyricon_module_description"
+            android:value="zmusic 歌词共享" />
+        <meta-data
+            android:name="lyricon_module_tags"
+            android:resource="@array/lyricon_module_tags" />
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
@@ -41,6 +55,7 @@
 
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
+        <package android:name="com.android.systemui" />
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>

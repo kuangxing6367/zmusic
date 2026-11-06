@@ -234,10 +234,19 @@ class _SearchPageState extends State<SearchPage> {
                     song: entry.song,
                     controller: widget.controller,
                     playback: widget.controller.playback,
-                    onTap: () => widget.controller.playback.playSong(
-                      entry.song,
-                      contextName: '最近播放',
-                    ),
+                    onTap: () {
+                      final songs = [
+                        for (final e in widget.controller.history) e.song,
+                      ];
+                      final index = songs.indexWhere(
+                        (song) => song.id == entry.song.id,
+                      );
+                      widget.controller.playback.playSongs(
+                        songs,
+                        index: index < 0 ? 0 : index,
+                        contextName: '最近播放',
+                      );
+                    },
                   ),
               ],
               if (_hotTerms.isEmpty &&

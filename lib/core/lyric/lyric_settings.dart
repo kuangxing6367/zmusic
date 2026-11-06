@@ -17,6 +17,9 @@ class LyricSettings extends ChangeNotifier {
   static const _kDesktopFontSize = 'desktopLyric.fontSize';
   static const _kDesktopBackground = 'desktopLyric.background';
   static const _kIsland = 'lyric.island';
+  static const _kIslandCapsule = 'lyric.islandCapsule';
+  static const _kIslandLyrics = 'lyric.islandLyrics';
+  static const _kIslandFallback = 'lyric.islandFallback';
 
   SharedPreferences? _prefs;
 
@@ -31,8 +34,22 @@ class LyricSettings extends ChangeNotifier {
   double desktopFontSize = 34;
   double desktopBackgroundOpacity = 0.62;
 
-  /// Status-bar / Dynamic-Island style lyric capsule on phones.
+  /// Publishes lyrics to the Android system lyric provider (Lyricon / 词幕).
+  /// On systems without that module nothing is drawn by the app.
   bool showIsland = true;
+
+  /// Draws the app's own lyric capsule below the status bar. Disabled by
+  /// default because the native island / provider looks better on modern
+  /// Android builds.
+  bool showIslandCapsule = false;
+
+  /// When the in-app capsule is enabled, show the current lyric line instead
+  /// of the song title (default keeps the song title).
+  bool islandLyrics = false;
+
+  /// Android 16+ only: fall back to a promoted live-update notification when
+  /// no system lyric provider is installed.
+  bool islandFallbackNotification = false;
 
   FontWeight get fontWeight => switch (fontWeightValue) {
         300 => FontWeight.w300,
@@ -56,6 +73,10 @@ class LyricSettings extends ChangeNotifier {
     desktopBackgroundOpacity =
         (prefs.getDouble(_kDesktopBackground) ?? desktopBackgroundOpacity).clamp(0.0, 0.9).toDouble();
     showIsland = prefs.getBool(_kIsland) ?? showIsland;
+    showIslandCapsule = prefs.getBool(_kIslandCapsule) ?? showIslandCapsule;
+    islandLyrics = prefs.getBool(_kIslandLyrics) ?? islandLyrics;
+    islandFallbackNotification =
+        prefs.getBool(_kIslandFallback) ?? islandFallbackNotification;
     notifyListeners();
   }
 
@@ -140,6 +161,27 @@ class LyricSettings extends ChangeNotifier {
     showIsland = value;
     notifyListeners();
     unawaited(_prefs?.setBool(_kIsland, value));
+  }
+
+  void setShowIslandCapsule(bool value) {
+    if (value == showIslandCapsule) return;
+    showIslandCapsule = value;
+    notifyListeners();
+    unawaited(_prefs?.setBool(_kIslandCapsule, value));
+  }
+
+  void setIslandLyrics(bool value) {
+    if (value == islandLyrics) return;
+    islandLyrics = value;
+    notifyListeners();
+    unawaited(_prefs?.setBool(_kIslandLyrics, value));
+  }
+
+  void setIslandFallbackNotification(bool value) {
+    if (value == islandFallbackNotification) return;
+    islandFallbackNotification = value;
+    notifyListeners();
+    unawaited(_prefs?.setBool(_kIslandFallback, value));
   }
 }
 

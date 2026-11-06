@@ -164,7 +164,7 @@ class _AppShellState extends State<AppShell> {
                         // covers page titles on phones.
                         padding: EdgeInsets.only(
                           top: (Platform.isAndroid || Platform.isIOS) &&
-                                  _controller.lyricSettings.showIsland
+                                  _controller.lyricSettings.showIslandCapsule
                               ? 34
                               : 0,
                         ),

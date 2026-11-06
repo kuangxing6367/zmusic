@@ -32,6 +32,10 @@ class AppTheme {
       ),
       scaffoldBackgroundColor: surface,
       visualDensity: VisualDensity.standard,
+      splashFactory: InkSparkle.splashFactory,
+      splashColor: scheme.primary.withValues(alpha: 0.16),
+      highlightColor: scheme.primary.withValues(alpha: 0.08),
+      hoverColor: scheme.primary.withValues(alpha: 0.06),
     );
 
     return base.copyWith(

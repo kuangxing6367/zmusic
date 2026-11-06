@@ -1,7 +1,7 @@
 name: zmusic
-description: "QPlayer rewritten in Flutter with official .qplug plugin compatibility."
+description: "Flutter music player with .qplug plugin compatibility."
 publish_to: 'none'
-version: 1.0.2+3
+version: 1.0.3+4
 
 environment:
   sdk: ^3.13.2

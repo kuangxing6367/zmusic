@@ -44,6 +44,13 @@ kotlin {
     }
 }
 
+dependencies {
+    // System status-bar lyric provider (Lyricon / 词幕) used by the island
+    // overlays. Publishing structured, syllable-timed lyrics here lets the
+    // system render them natively instead of as a plain notification.
+    implementation("io.github.proify.lyricon:provider:0.1.70")
+}
+
 flutter {
     source = "../.."
 }

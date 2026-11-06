@@ -284,9 +284,45 @@ class SettingsPage extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 12),
                   secondary: const Icon(Icons.smartphone_rounded),
                   title: const Text('状态栏歌词'),
-                  subtitle: const Text('手机端在顶部以灵动岛样式显示当前歌词'),
+                  subtitle: const Text(
+                    '共享给系统歌词提供方（词幕 / Lyricon），在状态栏与灵动岛原生显示',
+                  ),
                   value: lyrics.showIsland,
                   onChanged: lyrics.setShowIsland,
+                ),
+                const Divider(height: 1),
+                SwitchListTile(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 12),
+                  secondary: const Icon(Icons.crop_free_rounded),
+                  title: const Text('应用内歌词胶囊'),
+                  subtitle: const Text('不依赖系统，在状态栏下方自绘一条黑色胶囊'),
+                  value: lyrics.showIslandCapsule,
+                  onChanged: lyrics.setShowIslandCapsule,
+                ),
+                if (lyrics.showIslandCapsule) ...[
+                  const Divider(height: 1),
+                  SwitchListTile(
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 12),
+                    secondary: const Icon(Icons.subtitles_rounded),
+                    title: const Text('胶囊显示歌词'),
+                    subtitle: const Text('关闭时只显示歌名与歌手'),
+                    value: lyrics.islandLyrics,
+                    onChanged: lyrics.setIslandLyrics,
+                  ),
+                ],
+                const Divider(height: 1),
+                SwitchListTile(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 12),
+                  secondary: const Icon(Icons.notifications_active_rounded),
+                  title: const Text('通知栏回退'),
+                  subtitle: const Text(
+                    '没有安装系统歌词提供方时，用 Android 16 实时通知显示歌词',
+                  ),
+                  value: lyrics.islandFallbackNotification,
+                  onChanged: lyrics.setIslandFallbackNotification,
                 ),
               ],
             ),
@@ -393,7 +429,7 @@ class SettingsPage extends StatelessWidget {
                 const ListTile(
                   leading: Icon(Icons.info_outline_rounded),
                   title: Text('zmusic'),
-                  subtitle: Text('Flutter 重写的 QPlayer · 兼容官方 .qplug 插件'),
+                  subtitle: Text('本地音乐播放器 · 兼容 .qplug 插件'),
                 ),
                 const Divider(height: 1),
                 const ListTile(

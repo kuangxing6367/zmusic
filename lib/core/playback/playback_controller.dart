@@ -90,7 +90,7 @@ class PlaybackController extends ChangeNotifier {
   int _positionMs = 0;
   int _durationMs = 0;
   double _volume = 100;
-  RepeatMode _repeatMode = RepeatMode.off;
+  RepeatMode _repeatMode = RepeatMode.all;
   bool _shuffle = false;
   bool _lyricsVisible = true;
 
@@ -99,6 +99,8 @@ class PlaybackController extends ChangeNotifier {
   int _pendingSeekMs = 0;
   String _autoAdvanceBlocker = '';
   bool _pendingNaturalEnd = false;
+  int _endHandledGeneration = -1;
+  Timer? _advanceGuard;
   bool _scrobbled = false;
   Timer? _sleepTimer;
   DateTime? _sleepDeadline;
@@ -144,7 +146,7 @@ class PlaybackController extends ChangeNotifier {
     _volume = prefs.getDouble('playback.volume') ?? 100;
     _repeatMode = RepeatMode.values.firstWhere(
       (mode) => mode.wireName == prefs.getString('playback.repeat'),
-      orElse: () => RepeatMode.off,
+      orElse: () => RepeatMode.all,
     );
     _shuffle = prefs.getBool('playback.shuffle') ?? false;
 
@@ -171,6 +173,19 @@ class PlaybackController extends ChangeNotifier {
       if (_disposed) return;
       final ms = value.inMilliseconds;
       _positionMs = ms;
+      // Some backends stop at EOF without emitting `completed`; treat the
+      // last ~350 ms as an end-of-track as well so the queue keeps moving.
+      // `_started` keeps the tail of the previous track (position still near
+      // its duration while the next stream resolves) from skipping twice.
+      if (_playing &&
+          _started &&
+          !_resolving &&
+          _durationMs > 0 &&
+          ms >= _durationMs - 350) {
+        _onCompleted();
+      } else if (ms < _durationMs - 3000) {
+        _endHandledGeneration = -1;
+      }
       _maybeScrobble();
       if ((ms - _lastNotifiedPosition).abs() >= 200) {
         _lastNotifiedPosition = ms;
@@ -326,6 +341,7 @@ class PlaybackController extends ChangeNotifier {
     final target = positionMs.clamp(0, max(0, _durationMs)).toInt();
     _positionMs = target;
     _seekRevision++;
+    _endHandledGeneration = -1;
     await player.seek(Duration(milliseconds: target));
     notifyListeners();
   }
@@ -402,6 +418,8 @@ class PlaybackController extends ChangeNotifier {
     }
     if (_autoAdvanceBlocker != pluginId) return;
     _autoAdvanceBlocker = '';
+    _advanceGuard?.cancel();
+    _advanceGuard = null;
     if (_pendingNaturalEnd) {
       _pendingNaturalEnd = false;
       unawaited(_advance(auto: true));
@@ -474,9 +492,21 @@ class PlaybackController extends ChangeNotifier {
   }
 
   void _onCompleted() {
+    if (_disposed) return;
+    if (_endHandledGeneration == _loadGeneration) return;
+    _endHandledGeneration = _loadGeneration;
     _endRevision++;
     if (_autoAdvanceBlocker.isNotEmpty) {
       _pendingNaturalEnd = true;
+      // A plugin may hold the end to resolve the next stream itself. Do not
+      // let a broken/slow plugin freeze playback forever.
+      _advanceGuard?.cancel();
+      _advanceGuard = Timer(const Duration(seconds: 8), () {
+        if (!_pendingNaturalEnd) return;
+        _pendingNaturalEnd = false;
+        _autoAdvanceBlocker = '';
+        unawaited(_advance(auto: true));
+      });
       return;
     }
     _finishScrobble(completed: true);
@@ -498,6 +528,9 @@ class PlaybackController extends ChangeNotifier {
     _resolving = true;
     _started = false;
     _pendingSeekMs = seekMs;
+    _endHandledGeneration = -1;
+    _advanceGuard?.cancel();
+    _advanceGuard = null;
     onSongChanged?.call(song);
     notifyListeners();
 
